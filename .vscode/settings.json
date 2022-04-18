@@ -1,0 +1,18 @@
+{
+  "java.configuration.updateBuildConfiguration": "disabled",
+  "prettier.semi": false,
+  "prettier.useEditorConfig": false,
+  "prettier.trailingComma": "none",
+  "svelte.plugin.svelte.format.enable": false,
+  "prettier.endOfLine": "auto",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.markdownlint": true
+  },
+  "cSpell.words": ["formik", "persistor"]
+}
