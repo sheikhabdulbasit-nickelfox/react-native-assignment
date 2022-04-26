@@ -8,31 +8,34 @@ const {height} = Dimensions.get('window');
 const FormField = props => {
   const {
     keyboardType = 'name-phone-pad',
-    handleChange,
     value,
-    handleBlur,
     placeholder,
-    onFocus,
     activeFormId,
     fieldName,
+    handleBlur,
+    onFocus,
+    handleChange,
+    error,
+    touched,
   } = props;
+
   const {colors, customColors} = useTheme();
 
   return (
     <Field>
       {() => (
         <TextInput
-          // autoFocus={fieldName === 'firstName' ? true : false}
           style={[
             styles.input,
             activeFormId === fieldName
               ? {borderColor: colors.accent}
               : {borderColor: customColors.disabledBorder},
+            touched && error !== undefined && {borderColor: colors.error},
           ]}
           keyboardType={keyboardType}
           placeholder={placeholder}
-          onChangeText={handleChange}
-          onBlur={handleBlur}
+          onChangeText={handleChange(activeFormId)}
+          onBlur={handleBlur(fieldName)}
           value={value}
           onFocus={onFocus}
         />
