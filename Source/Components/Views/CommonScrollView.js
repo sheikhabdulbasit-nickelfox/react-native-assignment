@@ -2,7 +2,11 @@ import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
 const CommonScrollView = props => {
-  return <ScrollView style={styles.parent}>{props.children}</ScrollView>;
+  return (
+    <ScrollView showsVerticalScrollIndicator={false} style={styles.parent}>
+      {props.children}
+    </ScrollView>
+  );
 };
 
 export default CommonScrollView;
