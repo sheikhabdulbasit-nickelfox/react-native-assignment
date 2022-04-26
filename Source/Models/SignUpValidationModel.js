@@ -2,14 +2,16 @@ import * as Yup from 'yup';
 
 export const SignupValidationModel = Yup.object().shape({
   firstName: Yup.string()
-    .required('Name is required')
-    .matches(/^[a-zA-Z ]+$/, 'Name must be alphabets only'),
+    .required('First name is required')
+    .matches(/^[a-zA-Z ]+$/, 'Name must be alphabets only')
+    .nullable(),
   lastName: Yup.string()
-    .required()
-    .matches(/^[a-zA-Z ]+$/, 'Name must be alphabets only'),
+    .required('Last name is required')
+    .matches(/^[a-zA-Z ]+$/, 'Name must be alphabets only')
+    .nullable(),
   email: Yup.string()
-    .email('Invalid email')
     .required('Email is required')
+    .email('Invalid email')
     .nullable(),
   password: Yup.string()
     .required('Password is required')
