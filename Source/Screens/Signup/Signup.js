@@ -1,12 +1,14 @@
 import React, {Fragment, useState} from 'react';
 import {Pressable, StyleSheet, Dimensions} from 'react-native';
-
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Card, useTheme, Button} from 'react-native-paper';
+import {auth} from '../../../Firebase/firebase-config';
 import CommonScrollView from '../../Components/Views/CommonScrollView';
 import Title from '../../Components/Text/PTitle';
 import SignUpFormik from '@components/TextInput/SignUpFormik';
 import ProfilePictureContainer from '@components/Views/ProfilePictureContainer';
+import AppDispatcher from '@redux/Dispatchers/AppDispatcher';
 
 const {height} = Dimensions.get('window');
 
@@ -19,8 +21,33 @@ const SignUp = () => {
     setBackdropEnabled(true);
   };
 
-  const submitForm = values => {
-    console.log(values);
+  const registerUser = values => {
+    createUserWithEmailAndPassword(auth, values.email, values.password)
+      .then(res => {
+        if (res.user.accessToken) {
+          updateProfile(auth.currentUser, {
+            displayName: values.firstName + ' ' + values.lastName,
+            photoURL: dpImage.uri,
+            phoneNumber: values.mobileNo,
+          }).then(res => {
+            const user = auth.currentUser;
+            const data = {
+              tokens: user.accessToken,
+              user: {
+                name: user.displayName,
+                email: user.email,
+                uid: user.uid,
+                photoURL: user.photoURL,
+              },
+            };
+            AppDispatcher.setUserLoggedIn(data);
+          });
+        }
+      })
+      .catch(error => {
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
   };
 
   const selectFromGallery = () => {
@@ -51,23 +78,6 @@ const SignUp = () => {
 
   return (
     <Fragment>
-      {backdropEnabed && (
-        <Pressable
-          onPress={disableBackdrop}
-          style={[styles.backdrop, {backgroundColor: colors.disabled}]}>
-          <Card style={styles.card}>
-            <Card.Title
-              title="Choose profile picture"
-              style={styles.cardTitle}
-            />
-            <Card.Actions style={styles.cardActions}>
-              <Button onPress={selectFromGallery}>Use Gallery</Button>
-              <Button onPress={selectWithCamera}>Use Camera</Button>
-            </Card.Actions>
-          </Card>
-        </Pressable>
-      )}
-
       <CommonScrollView>
         {/* Heading */}
         <Title
@@ -86,8 +96,26 @@ const SignUp = () => {
         />
 
         {/* Sign Up Form */}
-        <SignUpFormik submitForm={submitForm} />
+        <SignUpFormik submitForm={registerUser} />
       </CommonScrollView>
+
+      {/* Backdrop with profile picture menu */}
+      {backdropEnabed && (
+        <Pressable
+          onPress={disableBackdrop}
+          style={[styles.backdrop, {backgroundColor: colors.disabled}]}>
+          <Card style={styles.card}>
+            <Card.Title
+              title="Choose profile picture"
+              style={styles.cardTitle}
+            />
+            <Card.Actions style={styles.cardActions}>
+              <Button onPress={selectFromGallery}>Use Gallery</Button>
+              <Button onPress={selectWithCamera}>Use Camera</Button>
+            </Card.Actions>
+          </Card>
+        </Pressable>
+      )}
     </Fragment>
   );
 };
