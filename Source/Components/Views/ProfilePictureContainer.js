@@ -19,8 +19,8 @@ const ProfilePictureContainer = ({dpImage, showImagePicker}) => {
       />
       <Pressable
         onPress={showImagePicker}
-        style={[styles.cameraIcon, {backgroundColor: colors.lightAsh}]}>
-        <Ionicon name="md-camera-sharp" size={25} color={colors.surface} />
+        style={[styles.cameraIcon, {backgroundColor: colors.backdrop}]}>
+        <Ionicon name="md-camera-sharp" size={25} color={colors.primary} />
       </Pressable>
     </View>
   );
