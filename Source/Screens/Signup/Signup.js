@@ -1,34 +1,75 @@
-import React, {Fragment, useState, useRef} from 'react';
-import {View, Pressable, StyleSheet, Dimensions, Image} from 'react-native';
+import React, {Fragment, useState} from 'react';
+import {Pressable, StyleSheet, Dimensions} from 'react-native';
 
-import Ionicon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
-import {useTheme} from 'react-native-paper';
+import {Card, useTheme, Button} from 'react-native-paper';
 import CommonScrollView from '../../Components/Views/CommonScrollView';
 import Title from '../../Components/Text/PTitle';
 import SignUpFormik from '@components/TextInput/SignUpFormik';
+import ProfilePictureContainer from '@components/Views/ProfilePictureContainer';
 
 const {height} = Dimensions.get('window');
 
 const SignUp = () => {
   const {colors} = useTheme();
   const [dpImage, setDpImage] = useState({state: false, uri: null});
-
   const [backdropEnabed, setBackdropEnabled] = useState(false);
+
+  const showImagePicker = () => {
+    setBackdropEnabled(true);
+  };
 
   const submitForm = values => {
     console.log(values);
   };
 
+  const selectFromGallery = () => {
+    setBackdropEnabled(false);
+    ImagePicker.openPicker({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      setDpImage({state: true, uri: image.path});
+    });
+  };
+
+  const selectWithCamera = () => {
+    setBackdropEnabled(false);
+    ImagePicker.openCamera({
+      width: 300,
+      height: 400,
+      cropping: true,
+    }).then(image => {
+      setDpImage({state: true, uri: image.path});
+    });
+  };
+
+  const disableBackdrop = () => {
+    setBackdropEnabled(false);
+  };
+
   return (
     <Fragment>
       {backdropEnabed && (
-        <View
-          style={[styles.backdrop, {backgroundColor: colors.disabled}]}></View>
+        <Pressable
+          onPress={disableBackdrop}
+          style={[styles.backdrop, {backgroundColor: colors.disabled}]}>
+          <Card style={styles.card}>
+            <Card.Title
+              title="Choose profile picture"
+              style={styles.cardTitle}
+            />
+            <Card.Actions style={styles.cardActions}>
+              <Button onPress={selectFromGallery}>Use Gallery</Button>
+              <Button onPress={selectWithCamera}>Use Camera</Button>
+            </Card.Actions>
+          </Card>
+        </Pressable>
       )}
 
       <CommonScrollView>
-        {/* Heading and Profile Picture */}
+        {/* Heading */}
         <Title
           textAlign="center"
           style={{marginTop: 20}}
@@ -38,20 +79,11 @@ const SignUp = () => {
           Create New Account
         </Title>
 
-        <View style={styles.imageContainer}>
-          <Image
-            source={
-              !dpImage.state
-                ? require('../../Resources/Images/dp.png')
-                : {uri: dpImage.uri}
-            }
-            style={[styles.profileImage, {backgroundColor: colors.primary}]}
-          />
-          <Pressable
-            style={[styles.cameraIcon, {backgroundColor: colors.lightAsh}]}>
-            <Ionicon name="md-camera-sharp" size={25} color={colors.surface} />
-          </Pressable>
-        </View>
+        {/* Profile Picture */}
+        <ProfilePictureContainer
+          dpImage={dpImage}
+          showImagePicker={showImagePicker}
+        />
 
         {/* Sign Up Form */}
         <SignUpFormik submitForm={submitForm} />
@@ -68,23 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
   },
-  imageContainer: {
-    alignSelf: 'center',
-  },
-  profileImage: {
-    margin: 30,
-    alignSelf: 'center',
-    height: height * 0.2,
-    width: height * 0.2,
-    borderRadius: 100,
-  },
-  cameraIcon: {
-    padding: 5,
-    borderRadius: 100,
-    position: 'absolute',
-    right: 35,
-    bottom: 33,
-  },
   backdrop: {
     position: 'absolute',
     top: 0,
@@ -92,5 +107,19 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     zIndex: 10,
+  },
+  card: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 11,
+    alignItems: 'flex-end',
+  },
+  cardTitle: {
+    alignSelf: 'flex-start',
+  },
+  cardActions: {
+    alignSelf: 'flex-end',
   },
 });
