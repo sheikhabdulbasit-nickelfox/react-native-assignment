@@ -32,6 +32,7 @@ const FormField = props => {
               : {borderColor: customColors.disabledBorder},
             touched && error !== undefined && {borderColor: colors.error},
           ]}
+          secureTextEntry={fieldName === 'password'}
           keyboardType={keyboardType}
           placeholder={placeholder}
           onChangeText={handleChange(activeFormId)}
