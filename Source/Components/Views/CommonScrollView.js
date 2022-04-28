@@ -1,10 +1,12 @@
 import React from 'react';
 import {ScrollView, StyleSheet} from 'react-native';
 
-const CommonScrollView = props => {
+const CommonScrollView = ({overrideStyle, children}) => {
   return (
-    <ScrollView showsVerticalScrollIndicator={false} style={styles.parent}>
-      {props.children}
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={[styles.parent, overrideStyle]}>
+      {children}
     </ScrollView>
   );
 };
@@ -15,5 +17,6 @@ const styles = StyleSheet.create({
   parent: {
     flex: 1,
     margin: 10,
+    paddingBottom: 20,
   },
 });
