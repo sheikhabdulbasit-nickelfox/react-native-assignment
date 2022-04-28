@@ -11,8 +11,9 @@ import {
 
 const {height} = Dimensions.get('window');
 
-const LoginFormik = ({submitForm}) => {
+const LoginFormik = ({submitForm, loading}) => {
   const [activeFormId, setActiveFormId] = useState('');
+
   return (
     <Formik
       initialValues={LoginInitialValues}
@@ -75,7 +76,7 @@ const LoginFormik = ({submitForm}) => {
             mode="contained"
             disabled={!isValid}
             onPress={handleSubmit}>
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </Button>
         </Fragment>
       )}
