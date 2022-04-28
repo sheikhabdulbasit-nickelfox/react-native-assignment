@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import {Pressable, StyleSheet, Dimensions} from 'react-native';
 import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import {auth} from '../../../Firebase/firebase-config';
 import CommonScrollView from '../../Components/Views/CommonScrollView';
@@ -7,13 +8,20 @@ import SignUpFormik from '@components/TextInput/SignUpFormik';
 import ProfilePictureContainer from '@components/Views/ProfilePictureContainer';
 import AppDispatcher from '@redux/Dispatchers/AppDispatcher';
 import ProfilePictureMenu from '@components/Views/ProfilePictureMenu';
+import PText from '@components/Text/PText';
 
-const SignUp = () => {
+const {height} = Dimensions.get('window');
+
+const SignUp = props => {
   const [dpImage, setDpImage] = useState({state: false, uri: null});
   const [backdropEnabed, setBackdropEnabled] = useState(false);
 
   const showImagePicker = () => {
     setBackdropEnabled(true);
+  };
+
+  const navigateToLogin = () => {
+    props.navigation.navigate('Login');
   };
 
   const registerUser = values => {
@@ -51,13 +59,13 @@ const SignUp = () => {
 
   return (
     <Fragment>
-      <CommonScrollView>
+      <CommonScrollView overrideStyle={styles.commonScrollView}>
         {/* Heading */}
         <Title
           textAlign="center"
-          style={{marginTop: 20}}
+          style={styles.textHeading}
           bold={true}
-          variant="h3"
+          variant="h1"
           textColor="primary">
           Create New Account
         </Title>
@@ -70,6 +78,15 @@ const SignUp = () => {
 
         {/* Sign Up Form */}
         <SignUpFormik submitForm={registerUser} />
+
+        <PText style={styles.pText} textAlign="center" variant="body2">
+          Already a user?{'\n'}
+          <Pressable onPress={navigateToLogin}>
+            <PText variant="body1" textColor="secondary">
+              Login
+            </PText>
+          </Pressable>
+        </PText>
 
         {/* End of ScrollView */}
       </CommonScrollView>
@@ -87,3 +104,16 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const styles = StyleSheet.create({
+  commonScrollView: {
+    marginVertical: 0,
+  },
+
+  textHeading: {
+    marginTop: height / 10,
+  },
+  pText: {
+    marginBottom: 20,
+  },
+});
