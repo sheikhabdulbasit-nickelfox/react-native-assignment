@@ -11,7 +11,7 @@ import {
 
 const {height} = Dimensions.get('window');
 
-const LoginFormik = () => {
+const LoginFormik = ({submitForm}) => {
   const [activeFormId, setActiveFormId] = useState('');
   return (
     <Formik
