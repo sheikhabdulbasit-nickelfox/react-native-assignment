@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {auth} from '../../../Firebase/firebase-config';
@@ -13,6 +13,7 @@ const {height} = Dimensions.get('window');
 
 export default Login = props => {
   const {reset} = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   const navigateToSignup = () => {
     reset({
@@ -22,6 +23,7 @@ export default Login = props => {
   };
 
   const userLogin = values => {
+    setLoading(true);
     signInWithEmailAndPassword(auth, values.email, values.password)
       .then(res => {
         if (res.user.accessToken) {
@@ -39,7 +41,13 @@ export default Login = props => {
           AppDispatcher.setUserLoggedIn(data);
         }
       })
-      .then(() => {});
+      .then(() => {
+        setLoading(false);
+        reset({
+          index: 0,
+          routes: [{name: 'Dashboard'}],
+        });
+      });
   };
 
   return (
@@ -56,7 +64,7 @@ export default Login = props => {
 
       {/* Login Form */}
       <View style={styles.formik}>
-        <LoginFormik submitForm={userLogin} />
+        <LoginFormik submitForm={userLogin} loading={loading} />
       </View>
 
       {/* Direct to login */}
