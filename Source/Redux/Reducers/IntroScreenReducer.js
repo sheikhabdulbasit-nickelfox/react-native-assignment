@@ -3,7 +3,8 @@ import Actions from '../Actions/IntroScreenActions';
 let initialState = {
   loadedFirstTime: true,
 };
-const AppReducer = (state = initialState, action) => {
+
+const IntroScreenReducer = (state = initialState, action) => {
   switch (action.type) {
     case Actions.FIRST_LOAD_COMPLETE:
       return {
@@ -15,4 +16,4 @@ const AppReducer = (state = initialState, action) => {
   }
 };
 
-export default AppReducer;
+export default IntroScreenReducer;
