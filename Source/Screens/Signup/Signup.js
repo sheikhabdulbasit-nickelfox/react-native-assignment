@@ -9,6 +9,7 @@ import ProfilePictureContainer from '@components/Views/ProfilePictureContainer';
 import AppDispatcher from '@redux/Dispatchers/AppDispatcher';
 import ProfilePictureMenu from '@components/Views/ProfilePictureMenu';
 import PText from '@components/Text/PText';
+import {useSelector} from 'react-redux';
 
 const {height} = Dimensions.get('window');
 
@@ -31,7 +32,6 @@ const SignUp = props => {
           updateProfile(auth.currentUser, {
             displayName: values.firstName + ' ' + values.lastName,
             photoURL: dpImage.uri,
-            phoneNumber: values.mobileNo,
           }).then(() => {
             const user = auth.currentUser;
             const data = {
