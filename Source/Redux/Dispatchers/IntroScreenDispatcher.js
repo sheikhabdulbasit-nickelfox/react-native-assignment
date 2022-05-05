@@ -1,6 +1,6 @@
-// App wide dispatcher
+// Intro Screen dispatcher
 
-import Stores from '../Stores/Store';
+import {Stores} from '../Stores/Store';
 import Actions from '../Actions/IntroScreenActions';
 
 export default IntroScreenDispatcher = {
