@@ -1,39 +1,59 @@
-import React from "react";
-import { Image } from "react-native";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import Closet from "../Screens/Feature/Closet";
-import Profile from "../Screens/Feature/Profile";
-import Home from "../Screens/Feature/Home";
-import { useTheme } from "react-native-paper";
-import { ActiveDot } from "@components";
+import React from 'react';
+import {Image} from 'react-native';
+// import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import Closet from '../Screens/Feature/Closet';
+// import Profile from '../Screens/Feature/Profile';
+// import Home from '../Screens/Feature/Home';
+import {useTheme} from 'react-native-paper';
+// import {ActiveDot} from '@components';
+import Dashboard from '../Screens/UserDashboard/index';
 
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 export function AppTabNavigator() {
-  const { colors } = useTheme();
+  const {colors} = useTheme();
 
   return (
     <Tab.Navigator
       barStyle={{
-        backgroundColor: colors.background
+        backgroundColor: colors.background,
       }}
       labeled={false}>
       <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
+        // options={{
+        //   tabBarIcon: ({focused}) => (
+        //     <React.Fragment>
+        //       <Image
+        //         source={
+        //           focused
+        //             ? require('@icons/Tabs/Active/Home/Home.png')
+        //             : require('@icons/Tabs/Inactive/Home/Home.png')
+        //         }
+        //       />
+        //       {focused && <ActiveDot />}
+        //     </React.Fragment>
+        //   ),
+        // }}
+      />
+      {/* <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <React.Fragment>
               <Image
                 source={
                   focused
-                    ? require("@icons/Tabs/Active/Home/Home.png")
-                    : require("@icons/Tabs/Inactive/Home/Home.png")
+                    ? require('@icons/Tabs/Active/Home/Home.png')
+                    : require('@icons/Tabs/Inactive/Home/Home.png')
                 }
               />
               {focused && <ActiveDot />}
             </React.Fragment>
-          )
+          ),
         }}
       />
 
@@ -41,18 +61,18 @@ export function AppTabNavigator() {
         name="Closet"
         component={Closet}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <React.Fragment>
               <Image
                 source={
                   focused
-                    ? require("@icons/Tabs/Active/Closet/Closet.png")
-                    : require("@icons/Tabs/Inactive/Closet/Closet.png")
+                    ? require('@icons/Tabs/Active/Closet/Closet.png')
+                    : require('@icons/Tabs/Inactive/Closet/Closet.png')
                 }
               />
               {focused && <ActiveDot />}
             </React.Fragment>
-          )
+          ),
         }}
       />
 
@@ -60,20 +80,20 @@ export function AppTabNavigator() {
         name="Profile"
         component={Profile}
         options={{
-          tabBarIcon: ({ focused }) => (
+          tabBarIcon: ({focused}) => (
             <React.Fragment>
               <Image
                 source={
                   focused
-                    ? require("@icons/Tabs/Active/Profile/Profile.png")
-                    : require("@icons/Tabs/Inactive/Profile/Profile.png")
+                    ? require('@icons/Tabs/Active/Profile/Profile.png')
+                    : require('@icons/Tabs/Inactive/Profile/Profile.png')
                 }
               />
               {focused && <ActiveDot />}
             </React.Fragment>
-          )
+          ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 }
