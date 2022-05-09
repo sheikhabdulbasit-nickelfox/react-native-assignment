@@ -45,7 +45,7 @@ export default Login = props => {
         setLoading(false);
         reset({
           index: 0,
-          routes: [{name: 'Dashboard'}],
+          routes: [{name: 'TabNavigator'}],
         });
       });
   };
