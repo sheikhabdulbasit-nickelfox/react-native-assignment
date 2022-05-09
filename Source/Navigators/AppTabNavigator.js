@@ -1,13 +1,9 @@
 import React from 'react';
-import {Image} from 'react-native';
-// import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import Closet from '../Screens/Feature/Closet';
-// import Profile from '../Screens/Feature/Profile';
-// import Home from '../Screens/Feature/Home';
 import {useTheme} from 'react-native-paper';
-// import {ActiveDot} from '@components';
-import Dashboard from '../Screens/UserDashboard/index';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MatComIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Home from '../Screens/UserDashboard/Home';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,81 +15,37 @@ export function AppTabNavigator() {
       barStyle={{
         backgroundColor: colors.background,
       }}
-      labeled={false}>
-      <Tab.Screen
-        name="Dashboard"
-        component={Dashboard}
-        // options={{
-        //   tabBarIcon: ({focused}) => (
-        //     <React.Fragment>
-        //       <Image
-        //         source={
-        //           focused
-        //             ? require('@icons/Tabs/Active/Home/Home.png')
-        //             : require('@icons/Tabs/Inactive/Home/Home.png')
-        //         }
-        //       />
-        //       {focused && <ActiveDot />}
-        //     </React.Fragment>
-        //   ),
-        // }}
-      />
-      {/* <Tab.Screen
-        name="Home"
-        component={Home}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <React.Fragment>
-              <Image
-                source={
-                  focused
-                    ? require('@icons/Tabs/Active/Home/Home.png')
-                    : require('@icons/Tabs/Inactive/Home/Home.png')
-                }
-              />
-              {focused && <ActiveDot />}
-            </React.Fragment>
-          ),
-        }}
-      />
+      labeled={false}
+      screenOptions={({route}) => ({
+        headerTitleAlign: 'center',
+        headerStyle: {
+          elevation: 0,
+          shadowOpacity: 0,
+        },
+        headerTitleStyle: {
+          alignSelf: 'center',
+          color: colors.black,
+          fontWeight: '400',
+        },
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
 
-      <Tab.Screen
-        name="Closet"
-        component={Closet}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <React.Fragment>
-              <Image
-                source={
-                  focused
-                    ? require('@icons/Tabs/Active/Closet/Closet.png')
-                    : require('@icons/Tabs/Inactive/Closet/Closet.png')
-                }
-              />
-              {focused && <ActiveDot />}
-            </React.Fragment>
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarIcon: ({focused}) => (
-            <React.Fragment>
-              <Image
-                source={
-                  focused
-                    ? require('@icons/Tabs/Active/Profile/Profile.png')
-                    : require('@icons/Tabs/Inactive/Profile/Profile.png')
-                }
-              />
-              {focused && <ActiveDot />}
-            </React.Fragment>
-          ),
-        }}
-      /> */}
+          if (route.name === 'Home') {
+            iconName = focused ? 'home' : 'ios-home-outline';
+            return <Ionicons name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Categories') {
+            iconName = 'sort-variant';
+            return <MatComIcons name={iconName} size={size} color={color} />;
+          } else if (route.name === 'Search') {
+            iconName = focused ? 'cart' : 'ios-cart-outline';
+            return <Ionicons name={iconName} size={size} color={color} />;
+          }
+        },
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.muted,
+        tabBarHideOnKeyboard: true,
+      })}>
+      <Tab.Screen name="Home" component={Home} />
     </Tab.Navigator>
   );
 }
