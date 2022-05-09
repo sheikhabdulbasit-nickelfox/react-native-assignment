@@ -3,7 +3,6 @@ import Login from '../../Screens/Login/Index';
 import Intro from '../../Screens/Onboarding/Introduction/Intro';
 import Splash from '../../Screens/Onboarding/Splash/Splash';
 import Signup from '../../Screens/Signup/Signup';
-import Dashboard from '../../Screens/UserDashboard/index';
 import {AppTabNavigator} from '@navigators/AppTabNavigator';
 
 export const Routes = [
@@ -11,6 +10,5 @@ export const Routes = [
   new RouteModel('Intro', Intro, {headerShown: false}),
   new RouteModel('Signup', Signup),
   new RouteModel('Login', Login, {headerTitle: 'Login'}),
-  new RouteModel('Dashboard', Dashboard, {headerTitle: 'Home'}),
   new RouteModel('TabNavigator', AppTabNavigator),
 ];
