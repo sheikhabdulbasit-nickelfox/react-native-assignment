@@ -13,17 +13,6 @@ export const AppStacks = () => {
     <Stack.Navigator
       initialRouteName="Splash"
       screenOptions={{
-        headerBackTitleVisible: false,
-        headerTitleAlign: 'center',
-        headerStyle: {
-          elevation: 0,
-          shadowOpacity: 0,
-        },
-        headerTitleStyle: {
-          alignSelf: 'center',
-          color: colors.primary,
-          fontWeight: '400',
-        },
         headerShown: false,
       }}>
       {Routes.map(({name, component, options}) => (
