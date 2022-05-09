@@ -17,7 +17,7 @@ export default Splash = () => {
     if (isLogged) {
       reset({
         index: 0,
-        routes: [{name: 'Dashboard'}],
+        routes: [{name: 'TabNavigator'}],
       });
     }
     if (loadedFirstTime) {
